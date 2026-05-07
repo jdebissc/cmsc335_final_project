@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+    --nav-height: 50px;
+}
+
+* {
+    box-sizing: content-box;
+    font-family: "Rubik", sans-serif;
+    color: black;
+}
+
+@keyframes background {
+    0% {
+        background-position: left;
+    } 50% {
+        background-position: right;
+    } 100% {
+        background-position: left;
+    }
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-size: 300% 300%;
+    animation: background 7s infinite;
+    background-image: linear-gradient(135deg, #d2ccff, #b0ffb9, #ffc6c6);
+}
+
+#nav * {
+    color: white;
+    max-height: var(--nav-height);
+}
+
+#nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    width: 100%;
+    background: black;
+}
+
+#icon {
+    padding: 0 20px;
+}
+
+#links {
+    justify-content: end;
+    padding: 0 10px;
+    justify-self: end;
+    flex: 1;
+}
+
+#links a {
+    margin: 0 10px;
+    font-size: 14px;
+    height: 100%;
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: border 250ms;
+    border-bottom: 0 solid white;
+}
+
+#links a:hover, #links a[selected] {
+    border-bottom: 5px solid white;
+}
+
+#website-name, #links {
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+}
+
+#content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+input {
+    padding: 0;
+    font-size: 20px;
+    field-sizing: content;
+    min-width: 13ch;
+    max-width: 50ch;
+    height: 50px;
+    font-family: monospace;
+    letter-spacing: 1ch;
+    border: none;
+    outline: none;
+    background: repeating-linear-gradient(90deg,black 0, black 1ch, transparent 1ch, transparent 2ch) 0 100%/100% 2px no-repeat;
+}
+
+#floater1, #floater2, #floater3 {
+    z-index: 0;
+    position: absolute;
+    width: 385px;
+    height: 500px;
+    background: #00000024;
+    transform: rotate3d(1, 1, 1, 30deg);
+}
+
+#floater2 {
+    transform: rotate3d(1, 1, 1, 40deg);
+}
+
+#floater3 {
+    transform: rotate3d(1, 1, 1, 50deg);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+fieldset {
+    border: 2px solid #e75a5a;
+}

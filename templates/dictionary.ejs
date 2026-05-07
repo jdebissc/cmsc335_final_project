@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="nav">
+        <img id="icon" src="inkscape_book.png" alt="">
+        <b id="website-name">
+            Word Website
+        </b>
+        <span id="links">
+            <a href="/">Home</a>
+            <a selected href="/dictionary">Dictionary</a>
+            <a href="">Hangman</a>
+            <a href="">Scores</a>
+        </span>
+    </div>
+    <div id="content">
+        <form action="">
+            <input name="word" type="text" placeholder="enter a word">
+            <p>
+                Type in a word above to see its pronunciation and definitions.
+                <br>
+                Word data is pulled from <a href="https://dictionaryapi.dev/">https://dictionaryapi.dev/</a>.
+            </p>
+            <% if (valid) { %>
+            <fieldset>
+                <legend>Your word: "<%= word %>"</legend>
+                <b>Phonetic:</b> <%= phonetic %>
+                <br>
+                <b>Origin:</b> <%= origin %>
+                <br>
+                <b>Meanings:</b>
+                <% for (let meaning of meanings) { %>
+                    <%= meaning.partOfSpeech %>
+                    <br>
+                <% } %>
+            </fieldset>
+            <% } %>
+        </form>
+    </div>
+</body>
+</html>
