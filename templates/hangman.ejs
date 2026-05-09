@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <script defer src="hangman.js"></script>
+    <div id="nav">
+        <img id="icon" src="images/inkscape_book.png" alt="">
+        <b id="website-name">
+            Word Website
+        </b>
+        <span id="links">
+            <a href="/">Home</a>
+            <a href="/dictionary">Dictionary</a>
+            <a selected href="/hangman">Hangman</a>
+        </span>
+    </div>
+    <div id="content">
+        <div id="terrapin">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+        </div>
+        <!-- This is wrapped in a form just to detect if user presses enter -->
+        <form onsubmit="guess_letters(event);">
+            <input id="guess-input" type="text" placeholder="guess letters" autocomplete="off">
+        </form>
+        <form>
+            <fieldset>
+                <legend>Current Game</legend>
+                <h3 id="guessed-word">START A GAME</h3>
+                <table borderless>
+                    <tbody>
+                        <tr>
+                            <td>Wrong guesses:</td>
+                            <td id="guess-count">--</td>
+                        </tr>
+                        <tr>
+                            <td>Time elapsed:</td>
+                            <td id="timer">--</td>
+                        </tr>
+                        <tr>
+                            <td>Score:</td>
+                            <td id="score-count">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <input type="button" onclick="new_hangman_game();" value="NEW GAME">
+                <input type="submit" value="SAVE SCORE">
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

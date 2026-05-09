@@ -7,38 +7,55 @@
 </head>
 <body>
     <div id="nav">
-        <img id="icon" src="inkscape_book.png" alt="">
+        <img id="icon" src="images/inkscape_book.png" alt="">
         <b id="website-name">
             Word Website
         </b>
         <span id="links">
             <a href="/">Home</a>
             <a selected href="/dictionary">Dictionary</a>
-            <a href="">Hangman</a>
-            <a href="">Scores</a>
+            <a href="/hangman">Hangman</a>
         </span>
     </div>
     <div id="content">
-        <form action="">
+        <form action="" method="GET">
             <input name="word" type="text" placeholder="enter a word">
             <p>
                 Type in a word above to see its pronunciation and definitions.
-                <br>
                 Word data is pulled from <a href="https://dictionaryapi.dev/">https://dictionaryapi.dev/</a>.
             </p>
             <% if (valid) { %>
-            <fieldset>
-                <legend>Your word: "<%= word %>"</legend>
-                <b>Phonetic:</b> <%= phonetic %>
-                <br>
-                <b>Origin:</b> <%= origin %>
-                <br>
-                <b>Meanings:</b>
-                <% for (let meaning of meanings) { %>
-                    <%= meaning.partOfSpeech %>
+                <fieldset>
+                    <legend>Your word: <i><%= word %></i></legend>
+                    <h2><%= phonetic %></h2>
+                    <% if (origin !== "") { %>
+                        <b>Origin:</b> <%= origin %>
+                        <br><br>
+                    <% } %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Usage</th>
+                                <th>Definition</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% for (let meaning of meanings) { %>
+                            <% for (let i = 0; i < meaning.definitions.length; ++i) { %>
+                                <tr>
+                                    <% if (i === 0) { %>
+                                        <td rowspan=<%= "" + meaning.definitions.length %>><%= meaning.partOfSpeech %></td>
+                                    <% } %>
+                                    <td><%= meaning.definitions[i].definition %></td>
+                                    <td><%= meaning.definitions[i].example %></td>
+                                </tr>
+                            <% } %>
+                        <% } %>
+                        </tbody>
+                    </table>
                     <br>
-                <% } %>
-            </fieldset>
+                </fieldset>
             <% } %>
         </form>
     </div>

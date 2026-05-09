@@ -16,68 +16,34 @@ app.set("views", path.resolve(__dirname, "templates"));
 // const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 
 const DICTIONARY_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-const TEST_RESULT = [
-{
-    "word": "hello",
-    "phonetic": "həˈləʊ",
-    "phonetics": [
-    {
-        "text": "həˈləʊ",
-        "audio": "//ssl.gstatic.com/dictionary/static/sounds/20200429/hello--_gb_1.mp3"
-    },
-    {
-        "text": "hɛˈləʊ"
-    }
-    ],
-    "origin": "early 19th century: variant of earlier hollo ; related to holla.",
-    "meanings": [
-    {
-        "partOfSpeech": "exclamation",
-        "definitions": [
-        {
-            "definition": "used as a greeting or to begin a phone conversation.",
-            "example": "hello there, Katie!",
-            "synonyms": [],
-            "antonyms": []
-        }
-        ]
-    },
-    {
-        "partOfSpeech": "noun",
-        "definitions": [
-        {
-            "definition": "an utterance of ‘hello’; a greeting.",
-            "example": "she was getting polite nods and hellos from people",
-            "synonyms": [],
-            "antonyms": []
-        }
-        ]
-    },
-    {
-        "partOfSpeech": "verb",
-        "definitions": [
-        {
-            "definition": "say or shout ‘hello’.",
-            "example": "I pressed the phone button and helloed",
-            "synonyms": [],
-            "antonyms": []
-        }
-        ]
-    }
-    ]
-}
-]
 
 app.get("/", async (req, res) => {
-    res.render("index.ejs");
+    res.render("home.ejs");
+});
+
+app.get("/scores", async (req, res) => {
+    res.redirect("/");
 });
 
 app.get("/dictionary", async (req, res) => {
-    // const {word} = req.body;
-    // const result = await fetch(DICTIONARY_API + word)[0];
-    const result = {...TEST_RESULT[0], valid: true};
-    // const result = {valid: false};
+    const {word} = req.query;
+    if (!word)
+        return res.render("dictionary.ejs", {valid: false})
+    let response = await fetch(DICTIONARY_API + word);
+    let result = response.ok ? (await response.json()) : {};
+    if (Array.isArray(result))
+        result = result[0];
+    else
+        result = {word, phonetic: "WORD NOT FOUND"};
+    result.phonetic ??= word;
+    result.origin ??= "";
+    result.meanings ??= [{partOfSpeech: "", definitions: [{definition: "", example: ""}]}];
+    result.valid = true;
     res.render("dictionary.ejs", result);
+});
+
+app.get("/hangman", async (req, res) => {
+    res.render("hangman.ejs", {});
 });
 
 app.listen(portNumber);
