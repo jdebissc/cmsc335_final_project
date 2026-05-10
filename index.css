@@ -92,7 +92,7 @@ body {
     overflow-y: scroll;
 }
 
-input[type="text"] {
+input[type="text"]:not([readonly]) {
     padding: 0;
     font-size: 20px;
     field-sizing: content;
@@ -103,23 +103,26 @@ input[type="text"] {
     letter-spacing: 1ch;
     border: none;
     outline: none;
-    background: repeating-linear-gradient(90deg,black 0, black 1ch, transparent 1ch, transparent 2ch) 0 100%/100% 2px no-repeat;
+    background: repeating-linear-gradient(90deg, black 0, black 1ch, transparent 1ch, transparent 2ch) 0 100%/100% 2px no-repeat;
 }
 
 input[type="button"], input[type="submit"] {
     font-weight: bold;
     color: white;
-    background: #784e8b;
+    background: #435f3a;
     border: 0;
     border-radius: 5px;
     outline: 0;
     padding: 10px 15px;
-    opacity: .85;
-    transition: opacity 100ms;
+    transition: background 100ms;
 }
 
-input[type="button"]:hover, input[type="submit"]:hover {
-    opacity: 1;
+input[type="button"][disabled], input[type="submit"][disabled] {
+    opacity: .5;
+}
+
+input[type="button"]:not([disabled]):hover, input[type="submit"]:not([disabled]):hover {
+    background: #80a773
 }
 
 legend {
@@ -130,6 +133,15 @@ legend {
 
 legend * {
     color: white;
+}
+
+form {
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }
 
 fieldset {
@@ -183,7 +195,7 @@ table:not([borderless]) td, table:not([borderless]) th {
     border: 1px solid black !important;
 }
 
-tr:nth-child(even) {
+table:not([borderless]) tr:nth-child(even) {
     background: #e7e7e7;
 }
 
@@ -191,11 +203,42 @@ tr:nth-child(even) {
     letter-spacing: 10px;
 }
 
-form {
-    min-height: 0;
+#name-input {
+    font-weight: normal;
+    field-sizing: fixed;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
+    letter-spacing: normal;
+    background: #e7e7e7;
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    font-size: 14px;
+    transition: border 250ms;
+    height: 40px;
+}
+
+#name-input:focus {
+    border-bottom: 2px solid #ff4747;
+}
+
+#score-count {
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+tr[place="1"] {
+    background: linear-gradient(45deg, #fff067, #ffb167) !important;
+}
+
+tr[place="2"] {
+    background: linear-gradient(45deg, #eeebff, #b3b1c3) !important;
+}
+
+tr[place="3"] {
+    background: linear-gradient(45deg, #efb75e, #ff7944) !important;
+}
+
+tr[place="1"], tr[place="2"], tr[place="3"] {
+    font-weight: bold;
 }

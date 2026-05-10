@@ -1,8 +1,11 @@
+"use strict";
+
 const max_guesses = 9;
 const guess_input = document.getElementById("guess-input");
 const guess_counter = document.getElementById("guess-count");
 const guess_display = document.getElementById("guessed-word");
 const score_counter = document.getElementById("score-count");
+const submit_button = document.getElementById("submit-button");
 const timer = document.getElementById("timer");
 const timer_update_ms = 500;
 
@@ -34,7 +37,7 @@ function display_elapsed_time() {
     let min = Math.floor(sec / 60);
     sec %= 60;
     timer.innerText = min === 0 ? `${sec}s` : `${min}m ${sec}s`;
-    score_counter.innerText = calculate_score();
+    score_counter.value = calculate_score();
 }
 
 function new_hangman_game() {
@@ -78,11 +81,19 @@ function guess_letter(letter) {
 
 function guess_letters(form_event) {
     form_event.preventDefault();
-    letters = guess_input.value.toUpperCase().split("");
+    let letters = guess_input.value.toUpperCase().split("");
     for (let letter of letters)
         guess_letter(letter);
     guess_input.value = "";
     show_tiles();
+}
+
+function enable_save_score() {
+    submit_button.setAttribute("disabled", null);
+}
+
+function disable_save_score() {
+    submit_button.setAttribute("disabled", "");
 }
 
 function save_score() {
@@ -91,3 +102,5 @@ function save_score() {
     // connect to mongodb
     // upload to mongo
 }
+
+disable_save_score();

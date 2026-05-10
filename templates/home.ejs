@@ -19,8 +19,31 @@
     </div>
     <div id="content">
         <fieldset>
-            <legend>Top Scores</legend>
-            <span>Random garbage</span>
+            <legend>Hangman Top Scores</legend>
+            <% if (scores.length === 0) { %>
+                No scores yet. Play hangman to add yours!
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Place</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Played</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let i = 0; i < scores.length; ++i) { %>
+                            <tr place=<%= "" + (i + 1) %>>
+                                <td><%= i + 1 %></td>
+                                <td><%= scores[i].name %></td>
+                                <td><%= scores[i].score %></td>
+                                <td><%= scores[i].date.toDateString() %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } %>
         </fieldset>
     </div>
 </body>

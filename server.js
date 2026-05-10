@@ -1,28 +1,58 @@
+"use strict";
+
+if (process.argv.length !== 3) {
+    console.log("Usage: node server.js <port_number>");
+    process.exit(1);
+}
+
+const port_number = parseInt(process.argv[2]);
+
 const express = require("express");
 const app = express();
 const path = require("path");
-const portNumber = 7003;
-const bodyParser = require("body-parser");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const body_parser = require("body-parser");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+const db_name = "CMSC335DB";
+const collection_name = "scores";
+
+const Score = mongoose.model("Score", new mongoose.Schema({
+    name: String,
+    score: Number,
+    date: Date
+}));
+
+dotenv.config({path: path.resolve(__dirname, ".env")});
+
+const uri = process.env.MONGO_CONNECTION_STRING;
 
 app.use(express.static(__dirname));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(body_parser.urlencoded({extended: false}));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
-
-// const databaseName = "CMSC335DB";
-// const collectionName = "dictionary";
-// const uri = process.env.MONGO_CONNECTION_STRING;
-// const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 
 const DICTIONARY_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
 app.get("/", async (req, res) => {
-    res.render("home.ejs");
+    let scores = [];
+    try {
+        await mongoose.connect(uri, {dbName: db_name});
+        scores = await Score.find({});
+        mongoose.disconnect();
+    } catch(error) {
+        console.error(error);
+    } finally {
+        res.render("home.ejs", {scores});
+    }
 });
 
-app.get("/scores", async (req, res) => {
+app.get("/scores", (req, res) => {
     res.redirect("/");
+});
+
+app.get("/hangman", (req, res) => {
+    res.render("hangman.ejs", {});
 });
 
 app.get("/dictionary", async (req, res) => {
@@ -42,9 +72,21 @@ app.get("/dictionary", async (req, res) => {
     res.render("dictionary.ejs", result);
 });
 
-app.get("/hangman", async (req, res) => {
-    res.render("hangman.ejs", {});
+app.post("/hangman", async (req, res) => {
+    try {
+        await mongoose.connect(uri, {dbName: db_name});
+        const date = new Date();
+        let {name, score} = req.body;
+        score = +score == score ? +score : 0;
+        const data = new Score({name, score, date});
+        await data.save();
+        mongoose.disconnect();
+    } catch(error) {
+        console.error(error);
+    } finally {
+        res.render("hangman.ejs", {});
+    }
 });
 
-app.listen(portNumber);
-console.log(`Listening on http://localhost:${portNumber}/`);
+app.listen(port_number);
+console.log(`Listening on port ${port_number}`);

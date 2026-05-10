@@ -34,7 +34,7 @@
         <form onsubmit="guess_letters(event);">
             <input id="guess-input" type="text" placeholder="guess letters" autocomplete="off">
         </form>
-        <form>
+        <form method="POST">
             <fieldset>
                 <legend>Current Game</legend>
                 <h3 id="guessed-word">START A GAME</h3>
@@ -50,13 +50,17 @@
                         </tr>
                         <tr>
                             <td>Score:</td>
-                            <td id="score-count">--</td>
+                            <td>
+                                <input readonly name="score" type="text" id="score-count" value="0">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
+                <input id="name-input" type="text" name="name" placeholder="your name">
+                <br>
                 <input type="button" onclick="new_hangman_game();" value="NEW GAME">
-                <input type="submit" value="SAVE SCORE">
+                <input id="submit-button" type="submit" value="SAVE SCORE">
             </fieldset>
         </form>
     </div>
