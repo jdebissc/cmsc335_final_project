@@ -2,6 +2,7 @@
 
 const max_guesses = 9;
 const guess_input = document.getElementById("guess-input");
+const displayed_letters = document.getElementById("guessed-letters");
 const guess_counter = document.getElementById("guess-count");
 const guess_display = document.getElementById("guessed-word");
 const score_counter = document.getElementById("score-count");
@@ -51,6 +52,13 @@ function new_hangman_game() {
     interval = setInterval(display_elapsed_time, timer_update_ms);
     game_running = true;
     update_guess();
+    // Reset the text for new games
+    displayed_letters.innerText = "--";
+    guess_counter.innerText = `${num_incorrect} out of ${max_guesses}`;
+    display_elapsed_time();
+    enable_guess_input();
+    disable_save_score();
+    guess_input.focus();
 }
 
 function show_tiles() {
@@ -65,6 +73,7 @@ function show_tiles() {
 function check_win_condition() {
     if (guessed_word !== word && num_incorrect < max_guesses)
         return disable_save_score();
+    disable_guess_input();
     enable_save_score();
     guess_display.innerText = word;
     game_running = false;
@@ -79,9 +88,25 @@ function update_guess() {
 function guess_letter(letter) {
     if (!game_running)
         return;
-    if (guessed_letters.has(letter) || word.indexOf(letter) === -1)
-        guess_counter.innerText = `${++num_incorrect} out of ${max_guesses}`;;
+    if (!(/^[A-Za-z]+$/.test(letter))) {
+        // Prevent anything other than letters from being guessed
+        document.getElementById("hint-text").innerText = "Only letter guesses are valid";
+        return;
+    }
+    if (guessed_letters.has(letter)) {
+        // Prevent double guessing a letter
+        document.getElementById("hint-text").innerText = "Letter has already been guessed";
+        return;
+    }
+    document.getElementById("hint-text").innerText = "Guess a letter";
+    if (word.indexOf(letter) === -1)
+        guess_counter.innerText = `${++num_incorrect} out of ${max_guesses}`;
     guessed_letters.add(letter);
+    let text = "";
+    for (const letter of guessed_letters) {
+        text += letter + " ";
+    }
+    displayed_letters.innerText = text;
     update_guess();
     check_win_condition();
 }
@@ -95,6 +120,14 @@ function guess_letters(form_event) {
     show_tiles();
 }
 
+function enable_guess_input() {
+    guess_input.removeAttribute("disabled");
+}
+
+function disable_guess_input() {
+    guess_input.setAttribute("disabled", "");
+}
+
 function enable_save_score() {
     submit_button.removeAttribute("disabled");
 }
@@ -103,4 +136,5 @@ function disable_save_score() {
     submit_button.setAttribute("disabled", "");
 }
 
+disable_guess_input();
 disable_save_score();

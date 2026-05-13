@@ -32,7 +32,8 @@
         </div>
         <!-- This is wrapped in a form just to detect if user presses enter -->
         <form onsubmit="guess_letters(event);">
-            <input id="guess-input" type="text" placeholder="guess letters" autocomplete="off">
+            <strong><u id="hint-text">Guess a letter</u></strong>
+            <input id="guess-input" type="text" autocomplete="off" maxlength="1">
         </form>
         <form method="POST">
             <fieldset>
@@ -41,15 +42,19 @@
                 <table borderless>
                     <tbody>
                         <tr>
-                            <td>Wrong guesses:</td>
+                            <td class="hangman-labels"><strong>Guessed letters:</strong></td>
+                            <td id="guessed-letters">--</td>
+                        </tr>
+                        <tr>
+                            <td class="hangman-labels"><strong>Wrong guesses:</strong></td>
                             <td id="guess-count">--</td>
                         </tr>
                         <tr>
-                            <td>Time elapsed:</td>
+                            <td class="hangman-labels"><strong>Time elapsed:</strong></td>
                             <td id="timer">--</td>
                         </tr>
                         <tr>
-                            <td>Score:</td>
+                            <td class="hangman-labels"><strong>Score:</strong></td>
                             <td>
                                 <input readonly name="score" type="text" id="score-count" value="0">
                             </td>
