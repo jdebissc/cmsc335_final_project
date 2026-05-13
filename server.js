@@ -24,7 +24,7 @@ const Score = mongoose.model("Score", new mongoose.Schema({
     date: Date
 }));
 
-dotenv.config({path: path.resolve(__dirname, ".env")});
+// dotenv.config({path: path.resolve(__dirname, ".env")});
 
 const uri = process.env.MONGO_CONNECTION_STRING;
 
