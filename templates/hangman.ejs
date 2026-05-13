@@ -39,7 +39,7 @@
             <fieldset id="hangman">
                 <legend>Current Game</legend>
                 <h3 id="guessed-word">START A GAME</h3>
-                <table borderless>
+                <table borderless id="hangman-box">
                     <tbody>
                         <tr>
                             <td class="hangman-labels"><strong>Guessed letters:</strong></td>
@@ -62,7 +62,7 @@
                     </tbody>
                 </table>
                 <br>
-                <input id="name-input" type="text" name="name" placeholder="your name">
+                <input id="name-input" type="text" name="name" placeholder="YOUR NAME">
                 <br>
                 <input type="button" onclick="new_hangman_game();" value="NEW GAME">
                 <input id="submit-button" type="submit" value="SAVE SCORE">
