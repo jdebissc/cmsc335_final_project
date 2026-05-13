@@ -109,7 +109,7 @@ input[type="text"]:not([readonly]) {
 input[type="button"], input[type="submit"] {
     font-weight: bold;
     color: white;
-    background: #435f3a;
+    background-color: #435f3a;
     border: 0;
     border-radius: 5px;
     outline: 0;
@@ -122,11 +122,11 @@ input[type="button"][disabled], input[type="submit"][disabled] {
 }
 
 input[type="button"]:not([disabled]):hover, input[type="submit"]:not([disabled]):hover {
-    background: #80a773
+    background-color: #80a773
 }
 
 legend {
-    background: black;
+    background-color: black;
     color: white;
     padding: 5px 10px;
 }

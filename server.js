@@ -9,6 +9,7 @@ const port_number = parseInt(process.argv[2]);
 
 const express = require("express");
 const app = express();
+const router = express.Router();
 const path = require("path");
 const body_parser = require("body-parser");
 const dotenv = require("dotenv");
@@ -34,7 +35,7 @@ app.set("views", path.resolve(__dirname, "templates"));
 
 const DICTIONARY_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
-app.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
     let scores = [];
     try {
         await mongoose.connect(uri, {dbName: db_name});
@@ -51,6 +52,8 @@ app.get("/", async (req, res) => {
 app.get("/scores", (req, res) => {
     res.redirect("/");
 });
+
+app.use("/", router);
 
 app.get("/hangman", (req, res) => {
     res.render("hangman.ejs", {});
