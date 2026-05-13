@@ -39,6 +39,7 @@ app.get("/", async (req, res) => {
     try {
         await mongoose.connect(uri, {dbName: db_name});
         scores = await Score.find({});
+        scores = scores.sort((a, b) => b.score - a.score);
         mongoose.disconnect();
     } catch(error) {
         console.error(error);

@@ -9,6 +9,7 @@ const submit_button = document.getElementById("submit-button");
 const timer = document.getElementById("timer");
 const timer_update_ms = 500;
 
+let game_running = false;
 let word = "";
 let guessed_word = "";
 let guessed_letters = new Set();
@@ -24,10 +25,6 @@ function calculate_score() {
 
 function elapsed_time_sec() {
     return Math.round((new Date() - time_start) / 1000);
-}
-
-function is_game_running() {
-    return word !== "";
 }
 
 const words = ["complex", "words"];
@@ -52,12 +49,8 @@ function new_hangman_game() {
     word = words[Math.floor(Math.random() * words.length)].toUpperCase();
     clearInterval(interval);
     interval = setInterval(display_elapsed_time, timer_update_ms);
+    game_running = true;
     update_guess();
-}
-
-function update_guess() {
-    guessed_word = word.split("").map((x) => guessed_letters.has(x) ? x : "_").join("");
-    guess_display.innerText = guessed_word;
 }
 
 function show_tiles() {
@@ -69,14 +62,28 @@ function show_tiles() {
         tiles[i].setAttribute("opaque", "false");
 }
 
+function check_win_condition() {
+    if (guessed_word !== word && num_incorrect < max_guesses)
+        return disable_save_score();
+    enable_save_score();
+    guess_display.innerText = word;
+    game_running = false;
+    clearInterval(interval);
+}
+
+function update_guess() {
+    guessed_word = word.split("").map((x) => guessed_letters.has(x) ? x : "_").join("");
+    guess_display.innerText = guessed_word;
+}
+
 function guess_letter(letter) {
-    if (!is_game_running() || num_incorrect >= max_guesses || letter.length !== 1)
+    if (!game_running)
         return;
-    // Count duplicates as an incorrect guess
     if (guessed_letters.has(letter) || word.indexOf(letter) === -1)
         guess_counter.innerText = `${++num_incorrect} out of ${max_guesses}`;;
     guessed_letters.add(letter);
     update_guess();
+    check_win_condition();
 }
 
 function guess_letters(form_event) {
@@ -89,18 +96,11 @@ function guess_letters(form_event) {
 }
 
 function enable_save_score() {
-    submit_button.setAttribute("disabled", null);
+    submit_button.removeAttribute("disabled");
 }
 
 function disable_save_score() {
     submit_button.setAttribute("disabled", "");
-}
-
-function save_score() {
-    if (!is_game_running()) return;
-    clearInterval(interval);
-    // connect to mongodb
-    // upload to mongo
 }
 
 disable_save_score();

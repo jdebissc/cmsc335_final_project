@@ -1,7 +1,7 @@
-**Submitted by:** Rose Smith (superterp)
-**Group Members:** Justin DeBisschop (jdebissc), Spencer Chen ()
-**App Description:** Allow users to find images, songs of an author, and store/retrieve the results.
-**YouTube Video Link:** https://www.youtube.com/MyAmazingAPP
+**Submitted by:** _ (_)
+**Group Members:** Justin DeBisschop (jdebissc), Spencer Chen (_)
+**App Description:** Allows users to look up dictionary words via an API, play hangman, and see hangman scores.
+**YouTube Video Link:** _
 **APIs:** Free Dictionary API (https://dictionaryapi.dev/)
-**Contact Email:**  superterp@notreal.address.what
-**Deployed App Link:** https://notreal.what.terpNel/myApp
+**Contact Email:** jdebissc@terpmail.umd.edu
+**Deployed App Link:** _
