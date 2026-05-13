@@ -148,6 +148,9 @@ fieldset {
     border: 2px solid black;
     background: white;
     border-radius: 5px;
+}
+
+#hangman {
     width: 20%;
 }
 
