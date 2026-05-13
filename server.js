@@ -1,12 +1,6 @@
 "use strict";
 
-if (process.argv.length !== 3) {
-    console.log("Usage: node server.js <port_number>");
-    process.exit(1);
-}
-
-const port_number = parseInt(process.argv[2]);
-
+const port_number = 7003;
 const express = require("express");
 const app = express();
 const router = express.Router();
