@@ -1,6 +1,7 @@
 "use strict";
 
 const max_guesses = 9;
+const hint_text = document.getElementById("hint-text");
 const guess_input = document.getElementById("guess-input");
 const displayed_letters = document.getElementById("guessed-letters");
 const guess_counter = document.getElementById("guess-count");
@@ -53,8 +54,10 @@ function new_hangman_game() {
     game_running = true;
     update_guess();
     // Reset the text for new games
+    hint_text.innerText = "Guess a letter";
     displayed_letters.innerText = "--";
     guess_counter.innerText = `${num_incorrect} out of ${max_guesses}`;
+    guess_input.value = "";
     display_elapsed_time();
     enable_guess_input();
     disable_save_score();
@@ -90,15 +93,15 @@ function guess_letter(letter) {
         return;
     if (!(/^[A-Za-z]+$/.test(letter))) {
         // Prevent anything other than letters from being guessed
-        document.getElementById("hint-text").innerText = "Only letter guesses are valid";
+        hint_text.innerText = "Only letter guesses are valid";
         return;
     }
     if (guessed_letters.has(letter)) {
         // Prevent double guessing a letter
-        document.getElementById("hint-text").innerText = "Letter has already been guessed";
+        hint_text.innerText = "Letter has already been guessed";
         return;
     }
-    document.getElementById("hint-text").innerText = "Guess a letter";
+    hint_text.innerText = "Guess a letter";
     if (word.indexOf(letter) === -1)
         guess_counter.innerText = `${++num_incorrect} out of ${max_guesses}`;
     guessed_letters.add(letter);
